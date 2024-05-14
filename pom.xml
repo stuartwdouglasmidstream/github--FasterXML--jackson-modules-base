@@ -1,5 +1,7 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion> 
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.fasterxml.jackson</groupId>
     <artifactId>jackson-base</artifactId>
@@ -7,13 +9,12 @@
   </parent>
   <groupId>com.fasterxml.jackson.module</groupId>
   <artifactId>jackson-modules-base</artifactId>
-  <name>Jackson modules: Base</name>
   <version>2.13.4</version>
   <packaging>pom</packaging>
+  <name>Jackson modules: Base</name>
   <description>Parent pom for Jackson "base" modules: modules that build directly on databind, and are
-not datatype, data format, or JAX-RS provider modules.
-  </description>
-
+not datatype, data format, or JAX-RS provider modules.</description>
+  <url>https://github.com/FasterXML/jackson-modules-base</url>
   <modules>
     <module>afterburner</module>
     <module>blackbird</module>
@@ -23,27 +24,21 @@ not datatype, data format, or JAX-RS provider modules.
     <module>mrbean</module>
     <module>osgi</module>
     <module>paranamer</module>
-    <!-- since 2.13: -->
     <module>no-ctor-deser</module>
   </modules>
-
-  <url>https://github.com/FasterXML/jackson-modules-base</url>
   <scm>
     <connection>scm:git:git@github.com:FasterXML/jackson-modules-base.git</connection>
     <developerConnection>scm:git:git@github.com:FasterXML/jackson-modules-base.git</developerConnection>
-    <url>http://github.com/FasterXML/jackson-modules-base</url>    
     <tag>jackson-modules-base-2.13.4</tag>
+    <url>http://github.com/FasterXML/jackson-modules-base</url>
   </scm>
   <issueManagement>
     <url>https://github.com/FasterXML/jackson-modules-base/issues</url>
   </issueManagement>
-
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <!-- 22-Sep-2020, tatu: 7.3.1 -> 9.0 for Jackson 2.12 -->
     <version.asm>9.0</version.asm>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -53,52 +48,41 @@ not datatype, data format, or JAX-RS provider modules.
       </dependency>
     </dependencies>
   </dependencyManagement>
-
-  <!-- Alas, need to include snapshot reference since otherwise can not find
-       snapshot of parent... -->
   <repositories>
     <repository>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
       <id>sonatype-nexus-snapshots</id>
       <name>Sonatype Nexus Snapshots</name>
       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-      <releases><enabled>false</enabled></releases>
-      <snapshots><enabled>true</enabled></snapshots>
     </repository>
   </repositories>
-
   <build>
     <pluginManagement>
       <plugins>
-	<plugin>
-	  <!-- Inherited from oss-base. Generate PackageVersion.java.-->
+        <plugin>
           <groupId>com.google.code.maven-replacer-plugin</groupId>
           <artifactId>replacer</artifactId>
-	  <executions>
+          <executions>
             <execution>
               <id>process-packageVersion</id>
               <phase>generate-sources</phase>
             </execution>
           </executions>
-	</plugin>
-
-	<plugin>
-          <groupId>org.apache.maven.plugins</groupId>
+        </plugin>
+        <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
           <configuration>
             <excludes>
               <exclude>com/fasterxml/jackson/**/failing/*.java</exclude>
             </excludes>
           </configuration>
-	</plugin>
+        </plugin>
       </plugins>
     </pluginManagement>
-
-    <plugins>
-      <plugin>
-        <groupId>de.jjohannes</groupId>
-        <artifactId>gradle-module-metadata-maven-plugin</artifactId>
-      </plugin>
-    </plugins>
   </build>
-
 </project>
